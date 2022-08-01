@@ -1,0 +1,49 @@
+* {
+   text-align: center;
+}
+
+.container {
+   display: flex;
+   gap: 20px;
+}
+
+form {
+   margin: 20px 0px;
+}
+
+table {
+   border: 1px solid #00000045;
+   font-size: large;
+   width: 50%;
+}
+
+.heading,
+.data {
+   padding: 10px;
+   margin: 10px;
+}
+
+.add-btn {
+   color: white;
+   padding: 14px 22px;
+   align-items: center;
+   border: none;
+   background-color: rgb(50, 84, 158);
+   font-weight: 500;
+   font-size: 16px;
+   margin: 10px
+}
+
+input {
+   height: 18px;
+}
+
+form input {
+   border-radius: 8px;
+   border: solid 1px white;
+   padding: 15px;
+}
+
+.none {
+   display: none;
+}
