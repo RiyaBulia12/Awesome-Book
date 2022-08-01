@@ -14,8 +14,9 @@ const booksContainer =
          <th class="heading">Author</th>
          <th class="heading">Action</th>
       </tr>
-      <span class="book-row">
-      </span>
+      <tr>
+      <div class="book-row"></div>
+      </tr>
    </table>
    <form class="" id="add-form">
       <fieldset>
