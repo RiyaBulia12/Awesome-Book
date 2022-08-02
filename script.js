@@ -6,23 +6,27 @@ function Books(id, title, author) {
 const bookList = [];
 const addBookBtn = document.getElementById('addBookBtn');
 const bookTable = document.getElementById('bookTable');
-const emptyMessage = document.querySelector('.emptyMessage');
-
+const emptyMessage = document.querySelector('.emptyBookMsg');
 const getBooks = JSON.parse(localStorage.getItem('books'));
-let id = 0;
+getBooksList();
 
-if (getBooks) {
-   window.addEventListener('DOMContentLoaded', (event) => {
-      getBooks.forEach(item => {
-         populateBookDetails(item);
+function getBooksList() {
+
+   if (getBooks.length) {
+      window.addEventListener('DOMContentLoaded', (event) => {
+         getBooks.forEach(item => {
+            createBookRow(item, false);
+         })
       })
-   })
-} else {
-   bookTable.style.cssText = `display:none`;
-   emptyMessage.style.cssText = `display:block`;
+   } else {
+      bookTable.style.cssText = `display:none`;
+      emptyMessage.style.cssText = `display:block`;
+   }
 }
 
-//Add Books to Table
+let id = bookList.length;
+
+//Add Books to Table from local storage
 addBookBtn.onclick = function () {
    bookTable.style.cssText = `display:block`;
    emptyMessage.style.cssText = `display:none`;
@@ -33,22 +37,11 @@ addBookBtn.onclick = function () {
 
    bookList.push(book);
    localStorage.setItem('books', JSON.stringify(bookList));
-   populateBookDetails(book);
-
-   const getBook = JSON.parse(localStorage.getItem('books'));
-   const removeBooks = document.querySelectorAll('.removeBook');
-   removeBooks.forEach((elem, index) => {
-      elem.addEventListener('click', () => {
-         const bookFiltered = getBook.filter(item => item.id !== index);
-         localStorage.setItem('books', JSON.stringify(bookFiltered));
-         console.log(bookFiltered)
-         populateBookDetails(bookFiltered);
-      })
-   })
+   createBookRow(book);
 }
 
-//populate book details from store
-function populateBookDetails(item) {
+//Populate book details from store with remove button
+function createBookRow(item) {
    const bkRow = document.createElement("tr");
    bkRow.setAttribute('id', item.id);
 
@@ -61,11 +54,29 @@ function populateBookDetails(item) {
    const removeBtn = bkRow.appendChild(document.createElement('button'));
    removeBtn.innerHTML = 'Remove';
    removeBtn.setAttribute('class', 'removeBook')
+   removeBtn.classList.add('btn');
 
    bookTable.appendChild(bkRow);
+   removeBook(bkRow);
 }
 
+function removeBook(bkRow) {
+   const getBook = JSON.parse(localStorage.getItem('books'));
 
+   const removeBooks = document.querySelectorAll('.removeBook');
 
+   removeBooks.forEach((elem) => {
+      elem.addEventListener('click', () => {
+         const bookFiltered = getBook.filter(item => item.id !== parseInt(bkRow.id));
+         if (bookFiltered !== null) localStorage.setItem('books', JSON.stringify(bookFiltered));
+
+         if (bookList.length) {
+            bookTable.style.cssText = `display:none`;
+            emptyMessage.style.cssText = `display:block`;
+         }
+         setTimeout(() => location.reload(), 500);
+      })
+   })
+}
 
 

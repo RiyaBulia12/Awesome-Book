@@ -5,6 +5,7 @@
 .container {
    display: flex;
    gap: 20px;
+   justify-content: center;
 }
 
 form {
@@ -23,7 +24,7 @@ form {
    margin: 10px;
 }
 
-.add-btn {
+.btn {
    color: white;
    padding: 14px 22px;
    align-items: center;
@@ -39,9 +40,12 @@ input {
 }
 
 form input {
-   border-radius: 8px;
-   border: solid 1px white;
+   border: solid 1px rgb(168, 168, 168);
    padding: 15px;
+}
+
+.emptyBookMsg {
+   width: 50%;
 }
 
 .none {
