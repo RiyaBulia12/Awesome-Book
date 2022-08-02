@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width initial-scale=1.0">
+   <title>Awesome Books</title>
+   <link rel="stylesheet" type="text/css" href="style.css">
+   <script defer src="script.js"></script>
+</head>
+
+<body>
+   <h1>Awesome Books</h1>
+   <div class="container">
+      <table class="bookTable" id="bookTable">
+         <tr class="headings">
+            <th class="heading">Title</th>
+            <th class="heading">Author</th>
+            <th class="heading">Action</th>
+         </tr>
+      </table>
+      <p class="emptyBookMsg none">There is no book to display. Please Add some Books using the Form</p>
+      <form class="" id="add-form">
+         <fieldset>
+            <legend>Add Books </legend>
+            <input type="text" name="title" id="title" placeholder="Enter Book Title">
+            <input type="text" name="author" id="author" placeholder="Enter Book Author">
+            <div class="btn-container">
+               <button class="btn" type="button" name="submit" id="addBookBtn">Add</button>
+            </div>
+         </fieldset>
+      </form>
+   </div>
+</body>
+
+</html>
