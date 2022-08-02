@@ -3,25 +3,44 @@
 }
 
 .container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
+  width: 70%;
+  align-content: center;
+  margin: auto;
 }
 
 form {
-  margin: 20px 0;
+  margin: 20px auto;
+  width: 70%;
 }
 
 .bookTable {
   border: 1px solid #00000045;
   font-size: large;
-  width: 50%;
+  width: 100%;
+  border-collapse: collapse;
 }
 
 .heading,
 .data {
   padding: 10px;
   margin: 10px;
+}
+
+th,
+td {
+  text-align: start;
+}
+
+th:nth-child(1) {
+  width: 80%;
+}
+
+td {
+  padding: 0 10px;
+}
+
+tr:nth-child(even) {
+  background-color: #e5e5e5;
 }
 
 .btn {
@@ -41,7 +60,9 @@ input {
 
 form input {
   border: solid 1px rgb(168, 168, 168);
-  padding: 15px;
+  padding: 11px;
+  width: 70%;
+  margin: 10px;
 }
 
 .emptyBookMsg {
@@ -50,4 +71,9 @@ form input {
 
 .none {
   display: none;
+}
+
+legend {
+  font-size: 2em;
+  font-weight: 600;
 }
