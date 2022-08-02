@@ -1,53 +1,53 @@
 * {
-   text-align: center;
+  text-align: center;
 }
 
 .container {
-   display: flex;
-   gap: 20px;
-   justify-content: center;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
 }
 
 form {
-   margin: 20px 0px;
+  margin: 20px 0;
 }
 
 .bookTable {
-   border: 1px solid #00000045;
-   font-size: large;
-   width: 50%;
+  border: 1px solid #00000045;
+  font-size: large;
+  width: 50%;
 }
 
 .heading,
 .data {
-   padding: 10px;
-   margin: 10px;
+  padding: 10px;
+  margin: 10px;
 }
 
 .btn {
-   color: white;
-   padding: 14px 22px;
-   align-items: center;
-   border: none;
-   background-color: rgb(50, 84, 158);
-   font-weight: 500;
-   font-size: 16px;
-   margin: 10px
+  color: white;
+  padding: 14px 22px;
+  align-items: center;
+  border: none;
+  background-color: rgb(50, 84, 158);
+  font-weight: 500;
+  font-size: 16px;
+  margin: 10px;
 }
 
 input {
-   height: 18px;
+  height: 18px;
 }
 
 form input {
-   border: solid 1px rgb(168, 168, 168);
-   padding: 15px;
+  border: solid 1px rgb(168, 168, 168);
+  padding: 15px;
 }
 
 .emptyBookMsg {
-   width: 50%;
+  width: 50%;
 }
 
 .none {
-   display: none;
+  display: none;
 }

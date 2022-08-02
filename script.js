@@ -13,7 +13,7 @@ getBooksList();
 function getBooksList() {
 
    if (getBooks.length) {
-      window.addEventListener('DOMContentLoaded', (event) => {
+      window.addEventListener('DOMContentLoaded', () => {
          getBooks.forEach(item => {
             createBookRow(item, false);
          })
