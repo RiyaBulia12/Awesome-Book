@@ -31,14 +31,12 @@ function getBooksList() {
 
 //Add Books to Table from local storage
 addBookBtn.onclick = function () {
-   // if (Books.fetchBooks()) {
-   //    bookTable.style.cssText = `display:block`;
-   //    emptyMessage.style.cssText = `display:none`;
-   // }
-
    Books.bookList = Books.fetchBooks() ? Books.fetchBooks() : [];
 
-   let id = Books.bookList ? Books.bookList[Books.bookList.length - 1].id + 1 : 0;
+   let id = 0;
+   if (Books.bookList && Books.bookList.length > 0) {
+      id = Books.bookList[Books.bookList.length - 1].id + 1
+   };
    const title = document.getElementById('title').value;
    const author = document.getElementById('author').value;
 
