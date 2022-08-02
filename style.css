@@ -3,7 +3,7 @@
 }
 
 .container {
-  width: 70%;
+  width: 60%;
   align-content: center;
   margin: auto;
 }
@@ -67,10 +67,15 @@ form input {
 
 .emptyBookMsg {
   width: 50%;
+  margin: 0 auto;
 }
 
 .none {
   display: none;
+}
+
+.block {
+  display: inline-table;
 }
 
 legend {

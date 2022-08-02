@@ -1,44 +1,54 @@
-function Books(id, title, author) {
-   this.id = id;
-   this.title = title;
-   this.author = author;
+class Books {
+   constructor(id, title, author) {
+      this.id = id;
+      this.title = title;
+      this.author = author;
+   }
+   static bookList = [];
+   static fetchBooks() {
+      return JSON.parse(localStorage.getItem('books'));
+   }
+
+   static updateBooks(books) {
+      localStorage.setItem('books', JSON.stringify(books));
+   }
 }
 let bookList = [];
 const addBookBtn = document.getElementById('addBookBtn');
 const bookTable = document.getElementById('bookTable');
 const emptyMessage = document.querySelector('.emptyBookMsg');
-const getBooks = JSON.parse(localStorage.getItem('books'));
-getBooksList();
+
+window.onload = () => { getBooksList() }
 
 function getBooksList() {
-
-   if (getBooks !== null) {
-      getBooks.forEach(item => {
+   if (Books.fetchBooks()) {
+      Books.bookList = Books.fetchBooks();
+      Books.bookList.forEach(item => {
          createBookRow(item);
       })
-   } else {
-      bookTable.style.cssText = `display:none`;
-      emptyMessage.style.cssText = `display:block`;
    }
 }
 
-let id = 0;
-
 //Add Books to Table from local storage
 addBookBtn.onclick = function () {
-   if (getBooks === null) {
-      bookTable.style.cssText = `display:block`;
-      emptyMessage.style.cssText = `display:none`;
-   }
+   // if (Books.fetchBooks()) {
+   //    bookTable.style.cssText = `display:block`;
+   //    emptyMessage.style.cssText = `display:none`;
+   // }
 
-   bookList === getBooks ? getBooks : [];
+   Books.bookList = Books.fetchBooks() ? Books.fetchBooks() : [];
+
+   let id = Books.bookList ? Books.bookList[Books.bookList.length - 1].id + 1 : 0;
    const title = document.getElementById('title').value;
    const author = document.getElementById('author').value;
-   const book = new Books(id++, title, author);
 
-   bookList.push(book);
-   localStorage.setItem('books', JSON.stringify(bookList));
-   createBookRow(book);
+   if (title && author) {
+      const book = new Books(id++, title, author);
+      Books.bookList.push(book);
+
+      localStorage.setItem('books', JSON.stringify(Books.bookList));
+      createBookRow(book);
+   }
 }
 
 //Populate book details from store with remove button
@@ -46,15 +56,12 @@ function createBookRow(item) {
    const bkRow = document.createElement("tr");
    bkRow.setAttribute('id', item.id);
 
-   const bkTitle = bkRow.appendChild(document.createElement('td'));
-   bkTitle.innerHTML = item.title;
-
-   const bkAuthor = bkRow.appendChild(document.createElement('td'));
-   bkAuthor.innerHTML = item.author;
+   const bookDetail = bkRow.appendChild(document.createElement('td'));
+   bookDetail.innerHTML = `"${item.title}" by ${item.author}`;
 
    const removeBtn = bkRow.appendChild(document.createElement('button'));
    removeBtn.innerHTML = 'Remove';
-   removeBtn.setAttribute('class', 'removeBook')
+   removeBtn.setAttribute('class', 'removeBtn')
    removeBtn.setAttribute('id', item.id)
    removeBtn.classList.add('btn');
 
@@ -63,20 +70,14 @@ function createBookRow(item) {
 }
 
 function removeBook() {
-   let getBooks = JSON.parse(localStorage.getItem('books'));
-
-   const removeBooks = document.querySelectorAll('.removeBook');
+   const removeBooks = document.querySelectorAll('.removeBtn');
 
    removeBooks.forEach((elem) => {
       elem.addEventListener('click', (event) => {
          const id = parseInt(event.target.id);
-         getBooks = getBooks.filter(item => item.id !== id);
-         localStorage.setItem('books', JSON.stringify(getBooks));
-
-         if (getBooks.length === 0) {
-            bookTable.style.cssText = `display:none`;
-            emptyMessage.style.cssText = `display:block`;
-         }
+         Books.bookList = Books.bookList.filter(item => item.id !== id);
+         Books.updateBooks(Books.bookList);
+         event.target.parentElement.remove();
          location.reload();
       })
    })
