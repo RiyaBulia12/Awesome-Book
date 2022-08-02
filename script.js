@@ -3,8 +3,8 @@ class Books {
       this.id = id;
       this.title = title;
       this.author = author;
+      this.bookList = [];
    }
-   static bookList = [];
    static fetchBooks() {
       return JSON.parse(localStorage.getItem('books'));
    }
@@ -13,17 +13,15 @@ class Books {
       localStorage.setItem('books', JSON.stringify(books));
    }
 }
-let bookList = [];
 const addBookBtn = document.getElementById('addBookBtn');
 const bookTable = document.getElementById('bookTable');
-const emptyMessage = document.querySelector('.emptyBookMsg');
 
 window.onload = () => { getBooksList() }
 
 function getBooksList() {
    if (Books.fetchBooks()) {
-      Books.bookList = Books.fetchBooks();
-      Books.bookList.forEach(item => {
+      this.bookList = Books.fetchBooks();
+      this.bookList.forEach(item => {
          createBookRow(item);
       })
    }
@@ -31,20 +29,20 @@ function getBooksList() {
 
 //Add Books to Table from local storage
 addBookBtn.onclick = function () {
-   Books.bookList = Books.fetchBooks() ? Books.fetchBooks() : [];
+   this.bookList = Books.fetchBooks() ? Books.fetchBooks() : [];
 
    let id = 0;
-   if (Books.bookList && Books.bookList.length > 0) {
-      id = Books.bookList[Books.bookList.length - 1].id + 1
-   };
+   if (this.bookList && this.bookList.length > 0) {
+      id = this.bookList[this.bookList.length - 1].id + 1
+   }
    const title = document.getElementById('title').value;
    const author = document.getElementById('author').value;
 
    if (title && author) {
       const book = new Books(id++, title, author);
-      Books.bookList.push(book);
+      this.bookList.push(book);
 
-      localStorage.setItem('books', JSON.stringify(Books.bookList));
+      localStorage.setItem('books', JSON.stringify(this.bookList));
       createBookRow(book);
    }
 }
@@ -73,8 +71,8 @@ function removeBook() {
    removeBooks.forEach((elem) => {
       elem.addEventListener('click', (event) => {
          const id = parseInt(event.target.id);
-         Books.bookList = Books.bookList.filter(item => item.id !== id);
-         Books.updateBooks(Books.bookList);
+         this.bookList = this.bookList.filter(item => item.id !== id);
+         Books.updateBooks(this.bookList);
          event.target.parentElement.remove();
          location.reload();
       })
