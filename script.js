@@ -3,7 +3,7 @@ function Books(id, title, author) {
    this.title = title;
    this.author = author;
 }
-const bookList = [];
+let bookList = [];
 const addBookBtn = document.getElementById('addBookBtn');
 const bookTable = document.getElementById('bookTable');
 const emptyMessage = document.querySelector('.emptyBookMsg');
@@ -12,11 +12,9 @@ getBooksList();
 
 function getBooksList() {
 
-   if (getBooks.length) {
-      window.addEventListener('DOMContentLoaded', () => {
-         getBooks.forEach(item => {
-            createBookRow(item, false);
-         })
+   if (getBooks !== null) {
+      getBooks.forEach(item => {
+         createBookRow(item);
       })
    } else {
       bookTable.style.cssText = `display:none`;
@@ -24,13 +22,16 @@ function getBooksList() {
    }
 }
 
-let id = bookList.length;
+let id = 0;
 
 //Add Books to Table from local storage
 addBookBtn.onclick = function () {
-   bookTable.style.cssText = `display:block`;
-   emptyMessage.style.cssText = `display:none`;
+   if (getBooks === null) {
+      bookTable.style.cssText = `display:block`;
+      emptyMessage.style.cssText = `display:none`;
+   }
 
+   bookList === getBooks ? getBooks : [];
    const title = document.getElementById('title').value;
    const author = document.getElementById('author').value;
    const book = new Books(id++, title, author);
@@ -54,27 +55,29 @@ function createBookRow(item) {
    const removeBtn = bkRow.appendChild(document.createElement('button'));
    removeBtn.innerHTML = 'Remove';
    removeBtn.setAttribute('class', 'removeBook')
+   removeBtn.setAttribute('id', item.id)
    removeBtn.classList.add('btn');
 
    bookTable.appendChild(bkRow);
-   removeBook(bkRow);
+   removeBook();
 }
 
-function removeBook(bkRow) {
-   const getBook = JSON.parse(localStorage.getItem('books'));
+function removeBook() {
+   let getBooks = JSON.parse(localStorage.getItem('books'));
 
    const removeBooks = document.querySelectorAll('.removeBook');
 
    removeBooks.forEach((elem) => {
-      elem.addEventListener('click', () => {
-         const bookFiltered = getBook.filter(item => item.id !== parseInt(bkRow.id));
-         if (bookFiltered !== null) localStorage.setItem('books', JSON.stringify(bookFiltered));
+      elem.addEventListener('click', (event) => {
+         const id = parseInt(event.target.id);
+         getBooks = getBooks.filter(item => item.id !== id);
+         localStorage.setItem('books', JSON.stringify(getBooks));
 
-         if (bookList.length) {
+         if (getBooks.length === 0) {
             bookTable.style.cssText = `display:none`;
             emptyMessage.style.cssText = `display:block`;
          }
-         setTimeout(() => location.reload(), 500);
+         location.reload();
       })
    })
 }
