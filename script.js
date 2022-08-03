@@ -6,6 +6,7 @@ const addForm = document.querySelector('.add-form');
 const contactForm = document.getElementById('contact-form');
 const dateSection = document.getElementById('date');
 const successMsg = document.getElementById('success');
+const emptyMsg = document.getElementById('empty');
 
 class Books {
    constructor() {
@@ -40,13 +41,23 @@ class Books {
       event.target.parentElement.remove();
       Books.updateBooks(this.bookList);
    }
+
+   static isEmpty() {
+      if (JSON.parse(localStorage.getItem('books'))) {
+         return JSON.parse(localStorage.getItem('books')).length === 0;
+      }
+      return (localStorage.getItem('books') === null ||
+         localStorage.getItem('books').value === undefined);
+   }
+
 }
 
 window.onload = () => {
    dateSection.innerHTML = Date()
    tableSection.classList.remove('none');
    Books.getBooksList();
-   if (Books.bookList) {
+   showEmptyMessage();
+   if (!Books.isEmpty()) {
       Books.bookList.forEach(item => {
          createBookRow(item);
       })
@@ -72,6 +83,7 @@ function createBookRow(item) {
       elem.addEventListener('click', (event) => {
          const bookObj = new Books();
          bookObj.removeBook(event);
+         showEmptyMessage();
       })
    })
 }
@@ -105,20 +117,31 @@ function hideSuccess() {
    successMsg.classList.add('none');
 }
 
+function showEmptyMessage() {
+   if (Books.isEmpty()) {
+      tableSection.classList.add('none');
+      emptyMsg.classList.remove('none');
+   } else {
+      tableSection.classList.remove('none');
+   }
+}
+
 listNav.addEventListener('click', () => {
-   tableSection.classList.remove('none');
+   showEmptyMessage();
    addForm.classList.add('none');
    contactForm.classList.add('none');
 })
 
 createNav.addEventListener('click', () => {
    hideSuccess();
+   emptyMsg.classList.add('none');
    tableSection.classList.add('none');
    addForm.classList.remove('none');
    contactForm.classList.add('none');
 })
 
 contactNav.addEventListener('click', () => {
+   emptyMsg.classList.add('none');
    addForm.classList.add('none');
    tableSection.classList.add('none');
    contactForm.classList.remove('none');
