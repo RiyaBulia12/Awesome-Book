@@ -1,3 +1,12 @@
+const tableSection = document.getElementById('table-section');
+const listNav = document.getElementById('list');
+const createNav = document.getElementById('create');
+const contactNav = document.getElementById('contact');
+const addForm = document.querySelector('.add-form');
+const contactForm = document.getElementById('contact-form');
+const dateSection = document.getElementById('date');
+const successMsg = document.getElementById('success');
+
 class Books {
    constructor() {
       this.bookList = [];
@@ -34,6 +43,8 @@ class Books {
 }
 
 window.onload = () => {
+   dateSection.innerHTML = Date()
+   tableSection.classList.remove('none');
    Books.getBooksList();
    if (Books.bookList) {
       Books.bookList.forEach(item => {
@@ -65,7 +76,7 @@ function createBookRow(item) {
    })
 }
 
-const addBookBtn = document.getElementById('addBookBtn');
+const addBookBtn = document.getElementById('add-book-btn');
 addBookBtn.onclick = function () {
    Books.bookList = Books.fetchBooks() ? Books.fetchBooks() : [];
 
@@ -73,14 +84,42 @@ addBookBtn.onclick = function () {
    if (Books.bookList && Books.bookList.length > 0) {
       id = Books.bookList[Books.bookList.length - 1].id + 1
    }
-   const title = document.getElementById('title').value;
-   const author = document.getElementById('author').value;
+   const title = document.getElementById('title');
+   const author = document.getElementById('author');
 
-   if (title && author) {
-      const book = { 'id': id++, 'title': title, 'author': author }
+   title.oninput = function () { hideSuccess(); }
+   author.oninput = function () { hideSuccess(); }
+
+   if (title.value && author.value) {
+      const book = { 'id': id++, 'title': title.value, 'author': author.value }
       const bookObj = new Books();
       bookObj.addBook(book);
       createBookRow(book);
+      title.value = '';
+      author.value = '';
+      successMsg.classList.remove('none');
    }
 }
 
+function hideSuccess() {
+   successMsg.classList.add('none');
+}
+
+listNav.addEventListener('click', () => {
+   tableSection.classList.remove('none');
+   addForm.classList.add('none');
+   contactForm.classList.add('none');
+})
+
+createNav.addEventListener('click', () => {
+   hideSuccess();
+   tableSection.classList.add('none');
+   addForm.classList.remove('none');
+   contactForm.classList.add('none');
+})
+
+contactNav.addEventListener('click', () => {
+   addForm.classList.add('none');
+   tableSection.classList.add('none');
+   contactForm.classList.remove('none');
+})
