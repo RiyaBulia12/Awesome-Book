@@ -41,6 +41,10 @@
   margin: 15px;
 }
 
+.contact-list > li {
+  text-align: justify;
+}
+
 .menu-list > li:hover {
   color: rgb(50, 84, 158);
   transition: all 0.5s;
@@ -141,16 +145,12 @@ legend,
   padding-inline-start: 11rem;
 }
 
-.contact-list > li {
-  text-align: justify;
-}
-
 /* ********************** End main container  ********************* */
 
 /* ********************** Begin for screens  ********************* */
 @media (max-width: 780px) {
   .navigation-menu {
-    margin: 0px;
+    margin: 0;
   }
 
   .app-title {
@@ -176,7 +176,7 @@ legend,
   }
 
   .copyright {
-    margin: 0px
+    margin: 0;
   }
 
   footer {

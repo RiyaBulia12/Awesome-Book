@@ -1,8 +1,11 @@
 const tableSection = document.getElementById('table-section');
+const listNav = document.getElementById('list');
+const createNav = document.getElementById('create');
+const contactNav = document.getElementById('contact');
 const addForm = document.querySelector('.add-form');
 const contactForm = document.getElementById('contact-form');
 const dateSection = document.getElementById('date');
-const addedMsg = document.getElementById('success');
+const successMsg = document.getElementById('success');
 
 class Books {
    constructor() {
@@ -92,26 +95,31 @@ addBookBtn.onclick = function () {
       const bookObj = new Books();
       bookObj.addBook(book);
       createBookRow(book);
-      success.classList.remove('none');
+      title.value = '';
+      author.value = '';
+      successMsg.classList.remove('none');
    }
 }
 
 function hideSuccess() {
-   success.classList.add('none');
+   successMsg.classList.add('none');
 }
 
-function displayMenuContent(id) {
-   if (id === 'list') {
-      tableSection.classList.remove('none');
-      addForm.classList.add('none');
-      contactForm.classList.add('none');
-   } else if (id === 'create') {
-      tableSection.classList.add('none');
-      addForm.classList.remove('none');
-      contactForm.classList.add('none');
-   } else {
-      addForm.classList.add('none');
-      tableSection.classList.add('none');
-      contactForm.classList.remove('none');
-   }
-}
+listNav.addEventListener('click', () => {
+   tableSection.classList.remove('none');
+   addForm.classList.add('none');
+   contactForm.classList.add('none');
+})
+
+createNav.addEventListener('click', () => {
+   hideSuccess();
+   tableSection.classList.add('none');
+   addForm.classList.remove('none');
+   contactForm.classList.add('none');
+})
+
+contactNav.addEventListener('click', () => {
+   addForm.classList.add('none');
+   tableSection.classList.add('none');
+   contactForm.classList.remove('none');
+})
