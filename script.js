@@ -109,12 +109,17 @@ addBookBtn.onclick = function () {
       createBookRow(book);
       title.value = '';
       author.value = '';
-      successMsg.classList.remove('none');
+      successMsg.innerHTML = 'Book added successfully'
+      successMsg.style.cssText = `color:green`;
+   } else {
+      successMsg.innerHTML = 'Empty fields not allowed'
+      successMsg.style.cssText = `color:red;`;
    }
+   successMsg.classList.remove('hidden');
 }
 
 function hideSuccess() {
-   successMsg.classList.add('none');
+   successMsg.classList.add('hidden');
 }
 
 function showEmptyMessage() {
